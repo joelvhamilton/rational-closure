@@ -2,15 +2,11 @@ package org.rationalclosure;
 
 import org.tweetyproject.logics.pl.syntax.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.tweetyproject.logics.pl.parser.PlParser;
-import org.tweetyproject.commons.BeliefSet;
-import org.tweetyproject.commons.ParserException;
 
 import org.tweetyproject.logics.pl.syntax.PlBeliefSet;
-import org.tweetyproject.logics.pl.reasoner.SimplePlReasoner;
 
 public class RationalReasoner {
     PlBeliefSet knowledgeBase;
@@ -22,6 +18,7 @@ public class RationalReasoner {
         this.parser = new PlParser();
         this.formulaToCheckEntailmentFor = formula;
         ArrayList<PlBeliefSet> rankedKnowledgeBase = BaseRank.rank(kb);
+        System.out.println(EntailmentChecker.checkEntailment(rankedKnowledgeBase, formula));
     }
 
 }

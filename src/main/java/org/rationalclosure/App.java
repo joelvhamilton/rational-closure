@@ -33,6 +33,6 @@ public class App {
         // SimplePlReasoner reasoner = new SimplePlReasoner();
         // Boolean entailed = reasoner.query(bs, (PlFormula) parser.parseFormula("d"));
         // System.out.println(entailed);
-        RationalReasoner reasoner = new RationalReasoner(bs, (PlFormula) parser.parseFormula("a"));
+        RationalReasoner reasoner = new RationalReasoner(bs, (PlFormula) parser.parseFormula("fd => !f"));
     }
 }
