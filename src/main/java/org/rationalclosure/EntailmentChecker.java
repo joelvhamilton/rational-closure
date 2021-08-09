@@ -12,13 +12,22 @@ public class EntailmentChecker {
     static Boolean checkEntailment(ArrayList<PlBeliefSet> rankedKB, PlFormula formula) {
         SimplePlReasoner classicalReasoner = new SimplePlReasoner();
         while (rankedKB.size() != 0) {
-            if (!classicalReasoner.query(combine(rankedKB),
+            System.out.println("We are checking whether or not "
+                    + (new Negation(((Implication) formula).getFormulas().getFirst())).toString() + " is entailed  by: "
+                    + combine(rankedKB).toString());
+            if (classicalReasoner.query(combine(rankedKB),
                     new Negation(((Implication) formula).getFormulas().getFirst()))) {
+                System.out.println("It is not, so we remove " + rankedKB.get(0).toString());
                 rankedKB.remove(rankedKB.get(0));
             } else {
-                if (classicalReasoner.query(combine(rankedKB), formula)) {
-                    return true;
-                }
+                break;
+            }
+        }
+        if (combine(rankedKB).size() != 0) {
+            System.out.println("We now check whether or not the formula" + formula.toString() + " is entailed by "
+                    + combine(rankedKB).toString());
+            if (classicalReasoner.query(combine(rankedKB), formula)) {
+                return true;
             }
         }
         return false;
