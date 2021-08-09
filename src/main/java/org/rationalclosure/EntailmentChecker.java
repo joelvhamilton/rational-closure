@@ -20,6 +20,7 @@ public class EntailmentChecker {
                 System.out.println("It is not, so we remove " + rankedKB.get(0).toString());
                 rankedKB.remove(rankedKB.get(0));
             } else {
+                System.out.println("It is!");
                 break;
             }
         }
