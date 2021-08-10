@@ -34,13 +34,12 @@ public class BaseRank {
             newRank.removeAll(currentMaterialisation);
             if (newRank.size() != 0) {
                 rankedKB.add(newRank);
+            } else {
+                classicalStatements.addAll(currentMaterialisation);
             }
         }
         rankedKB.add(classicalStatements);
-        // if (currentMaterialisation.size() != 0) {
-        // rankedKB.add(currentMaterialisation);
-        // }
-
+        System.out.println("Base Ranking of Knowledge Base:");
         for (PlBeliefSet rank : rankedKB) {
             if (rankedKB.indexOf(rank) == rankedKB.size() - 1) {
                 System.out.println("Infinite Rank:" + rank.toString());

@@ -20,6 +20,7 @@ public class EntailmentChecker {
                 System.out.println("It is! so we remove " + rankedKB.get(0).toString());
                 rankedKB.remove(rankedKB.get(0));
             } else {
+                System.out.println("It is not!");
                 break;
             }
         }
@@ -31,9 +32,13 @@ public class EntailmentChecker {
             } else {
                 return false;
             }
+        } else {
+            System.out.println("There would then be no ranks remaining, which means the knowledge base entails "
+                    + (new Negation(((Implication) formula).getFormulas().getFirst()).toString())
+                    + ", and thus it entails " + formula.toString()
+                    + ", so we know the defeasible counterpart of this implication is also entailed!");
+            return true;
         }
-        return true;
-
     }
 
     static PlBeliefSet combine(ArrayList<PlBeliefSet> ranks) {
