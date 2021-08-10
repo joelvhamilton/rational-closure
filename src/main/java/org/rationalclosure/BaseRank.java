@@ -9,13 +9,10 @@ import org.tweetyproject.logics.pl.reasoner.SimplePlReasoner;
 
 public class BaseRank {
 
-    static ArrayList<PlBeliefSet> rank(PlBeliefSet kb) {
+    static ArrayList<PlBeliefSet> rank(PlBeliefSet kb, PlBeliefSet classicalStatements) {
         SimplePlReasoner reasoner = new SimplePlReasoner();
-
         ArrayList<PlBeliefSet> rankedKB = new ArrayList<PlBeliefSet>();
-
         PlBeliefSet currentMaterialisation = kb;
-
         PlBeliefSet prevMaterialisation = new PlBeliefSet();
 
         while (!currentMaterialisation.equals(prevMaterialisation)) {
@@ -30,19 +27,26 @@ public class BaseRank {
             }
             PlBeliefSet newRank = new PlBeliefSet();
             for (PlFormula form : prevMaterialisation) {
-                newRank.add(form);
+                if (!classicalStatements.contains(form)) {
+                    newRank.add(form);
+                }
             }
             newRank.removeAll(currentMaterialisation);
             if (newRank.size() != 0) {
                 rankedKB.add(newRank);
             }
         }
-        if (currentMaterialisation.size() != 0) {
-            rankedKB.add(currentMaterialisation);
-        }
+        rankedKB.add(classicalStatements);
+        // if (currentMaterialisation.size() != 0) {
+        // rankedKB.add(currentMaterialisation);
+        // }
 
         for (PlBeliefSet rank : rankedKB) {
-            System.out.println("Rank " + Integer.toString(rankedKB.indexOf(rank)) + ":" + rank.toString());
+            if (rankedKB.indexOf(rank) == rankedKB.size() - 1) {
+                System.out.println("Infinite Rank:" + rank.toString());
+            } else {
+                System.out.println("Rank " + Integer.toString(rankedKB.indexOf(rank)) + ":" + rank.toString());
+            }
         }
         return rankedKB;
     }

@@ -17,10 +17,9 @@ public class EntailmentChecker {
                     + combine(rankedKB).toString());
             if (classicalReasoner.query(combine(rankedKB),
                     new Negation(((Implication) formula).getFormulas().getFirst()))) {
-                System.out.println("It is not, so we remove " + rankedKB.get(0).toString());
+                System.out.println("It is! so we remove " + rankedKB.get(0).toString());
                 rankedKB.remove(rankedKB.get(0));
             } else {
-                System.out.println("It is!");
                 break;
             }
         }
@@ -29,9 +28,12 @@ public class EntailmentChecker {
                     + combine(rankedKB).toString());
             if (classicalReasoner.query(combine(rankedKB), formula)) {
                 return true;
+            } else {
+                return false;
             }
         }
-        return false;
+        return true;
+
     }
 
     static PlBeliefSet combine(ArrayList<PlBeliefSet> ranks) {

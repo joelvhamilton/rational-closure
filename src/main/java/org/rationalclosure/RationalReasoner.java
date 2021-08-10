@@ -13,11 +13,11 @@ public class RationalReasoner {
     PlParser parser;
     PlFormula formulaToCheckEntailmentFor;
 
-    RationalReasoner(PlBeliefSet kb, PlFormula formula) {
+    RationalReasoner(PlBeliefSet kb, PlFormula formula, PlBeliefSet classicalStatements) {
         this.knowledgeBase = kb;
         this.parser = new PlParser();
         this.formulaToCheckEntailmentFor = formula;
-        ArrayList<PlBeliefSet> rankedKnowledgeBase = BaseRank.rank(kb);
+        ArrayList<PlBeliefSet> rankedKnowledgeBase = BaseRank.rank(kb, classicalStatements);
         System.out.println(EntailmentChecker.checkEntailment(rankedKnowledgeBase, formula));
     }
 
