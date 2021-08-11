@@ -13,7 +13,7 @@ public class EntailmentChecker {
         SimplePlReasoner classicalReasoner = new SimplePlReasoner();
         while (rankedKB.size() != 0) {
             System.out.println("We are checking whether or not "
-                    + (new Negation(((Implication) formula).getFormulas().getFirst())).toString() + " is entailed  by: "
+                    + (new Negation(((Implication) formula).getFormulas().getFirst())).toString() + " is entailed by: "
                     + combine(rankedKB).toString());
             if (classicalReasoner.query(combine(rankedKB),
                     new Negation(((Implication) formula).getFormulas().getFirst()))) {
