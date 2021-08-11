@@ -21,6 +21,7 @@ public class App {
         PlFormula formulaWereCheckingFor = (PlFormula) parser.parseFormula("a");
 
         String fileName = args[0];
+        String entailmentCheckingAlgorithm = args[1];
         try {
             File file = new File(fileName);
             Scanner reader = new Scanner(file);
@@ -45,7 +46,8 @@ public class App {
             System.out.println("Equivalence symbol: <=>");
             System.out.println("Negation symbol: !");
         }
-        RationalReasoner reasoner = new RationalReasoner(beliefSet, formulaWereCheckingFor, classicalSet);
+        RationalReasoner reasoner = new RationalReasoner(beliefSet, formulaWereCheckingFor, classicalSet,
+                entailmentCheckingAlgorithm);
     }
 
     static String reformatDefeasibleImplication(String formula) {
