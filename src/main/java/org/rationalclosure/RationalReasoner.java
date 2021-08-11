@@ -20,5 +20,4 @@ public class RationalReasoner {
         ArrayList<PlBeliefSet> rankedKnowledgeBase = BaseRank.rank(kb, classicalStatements);
         System.out.println(EntailmentChecker.checkEntailment(rankedKnowledgeBase, formula));
     }
-
 }

@@ -1,15 +1,8 @@
 package org.rationalclosure;
 
-import org.tweetyproject.logics.pl.syntax.*;
-
-import java.io.IOException;
-
-import org.tweetyproject.logics.pl.parser.PlParser;
-import org.tweetyproject.commons.ParserException;
-
 public class TranslateLogicVariant {
 
-    static String translate(String formula) throws IOException, ParserException {
+    static String translate(String formula) {
         formula = reformatDefeasibleImplication(formula);
         formula.replaceAll("~", "!");
         formula = formula.replaceAll("&", "&&");
