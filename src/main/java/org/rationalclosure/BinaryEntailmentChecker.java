@@ -23,7 +23,7 @@ public class BinaryEntailmentChecker {
                 return checkEntailmentBinarySearch(rankedKB, formula, mid + 1, right, negationOfAntecedent);
             }
             // we now know that removing the middle one and those above it results in the
-            // negation of the antecdent not being entailed.
+            // negation of the antecedent not being entailed.
             // we must check whether or not putting it back in means the negation of the
             // antecdent is entailed.
             else {

@@ -11,31 +11,31 @@ public class EntailmentChecker {
 
     static Boolean checkEntailment(ArrayList<PlBeliefSet> rankedKB, PlFormula formula) {
         SimplePlReasoner classicalReasoner = new SimplePlReasoner();
-        while (rankedKB.size() != 0) {
-            System.out.println("We are checking whether or not "
-                    + (new Negation(((Implication) formula).getFormulas().getFirst())).toString() + " is entailed by: "
-                    + combine(rankedKB).toString());
-            if (classicalReasoner.query(combine(rankedKB),
-                    new Negation(((Implication) formula).getFormulas().getFirst()))) {
+        PlFormula negationOfAntecedent = new Negation(((Implication) formula).getFormulas().getFirst());
+        PlBeliefSet combinedRankedKB = combine(rankedKB);
+        while (combinedRankedKB.size() != 0) {
+            System.out.println("We are checking whether or not " + negationOfAntecedent.toString() + " is entailed by: "
+                    + combinedRankedKB.toString());
+            if (classicalReasoner.query(combinedRankedKB, negationOfAntecedent)) {
                 System.out.println("It is! so we remove " + rankedKB.get(0).toString());
+                combinedRankedKB.removeAll(rankedKB.get(0));
                 rankedKB.remove(rankedKB.get(0));
             } else {
                 System.out.println("It is not!");
                 break;
             }
         }
-        if (combine(rankedKB).size() != 0) {
+        if (combinedRankedKB.size() != 0) {
             System.out.println("We now check whether or not the formula" + formula.toString() + " is entailed by "
-                    + combine(rankedKB).toString());
-            if (classicalReasoner.query(combine(rankedKB), formula)) {
+                    + combinedRankedKB.toString());
+            if (classicalReasoner.query(combinedRankedKB, formula)) {
                 return true;
             } else {
                 return false;
             }
         } else {
             System.out.println("There would then be no ranks remaining, which means the knowledge base entails "
-                    + (new Negation(((Implication) formula).getFormulas().getFirst()).toString())
-                    + ", and thus it entails " + formula.toString()
+                    + negationOfAntecedent.toString() + ", and thus it entails " + formula.toString()
                     + ", so we know the defeasible counterpart of this implication is also entailed!");
             return true;
         }

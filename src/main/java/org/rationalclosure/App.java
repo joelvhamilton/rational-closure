@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import org.tweetyproject.logics.pl.parser.PlParser;
 import org.tweetyproject.commons.ParserException;
+import org.tweetyproject.commons.util.SetTools;
 import org.tweetyproject.logics.pl.reasoner.*;
 
 /**
@@ -25,9 +26,16 @@ public class App {
         try {
             File file = new File(fileName);
             Scanner reader = new Scanner(file);
-            formulaWereCheckingFor = (PlFormula) parser.parseFormula(reformatDefeasibleImplication(reader.nextLine()));
+            String formulaToCheckFor = reader.nextLine();
+            if (formulaToCheckFor.contains("¬")) {
+                formulaToCheckFor = formulaToCheckFor.replaceAll("¬", "!");
+            }
+            formulaWereCheckingFor = (PlFormula) parser.parseFormula(reformatDefeasibleImplication(formulaToCheckFor));
             while (reader.hasNextLine()) {
                 String stringFormula = reader.nextLine();
+                if (stringFormula.contains("¬")) {
+                    stringFormula = stringFormula.replaceAll("¬", "!");
+                }
                 if (stringFormula.contains("~>")) {
                     stringFormula = reformatDefeasibleImplication(stringFormula);
                 } else {

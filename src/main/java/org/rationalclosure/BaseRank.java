@@ -6,11 +6,15 @@ import java.util.*;
 
 import org.tweetyproject.logics.pl.syntax.PlBeliefSet;
 import org.tweetyproject.logics.pl.reasoner.SimplePlReasoner;
+import org.tweetyproject.logics.pl.reasoner.SatReasoner;
+import org.tweetyproject.logics.pl.sat.Sat4jSolver;
+import org.tweetyproject.logics.pl.sat.SatSolver;
 
 public class BaseRank {
 
     static ArrayList<PlBeliefSet> rank(PlBeliefSet kb, PlBeliefSet classicalStatements) {
-        SimplePlReasoner reasoner = new SimplePlReasoner();
+        SatSolver.setDefaultSolver(new Sat4jSolver());
+        SatReasoner reasoner = new SatReasoner();
         ArrayList<PlBeliefSet> rankedKB = new ArrayList<PlBeliefSet>();
         PlBeliefSet currentMaterialisation = kb;
         PlBeliefSet prevMaterialisation = new PlBeliefSet();
@@ -34,6 +38,7 @@ public class BaseRank {
             newRank.removeAll(currentMaterialisation);
             if (newRank.size() != 0) {
                 rankedKB.add(newRank);
+                System.out.println("Added rank " + Integer.toString(rankedKB.size() - 1));
             } else {
                 classicalStatements.addAll(currentMaterialisation);
             }
