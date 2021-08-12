@@ -4,14 +4,18 @@ import org.tweetyproject.logics.pl.syntax.*;
 
 import java.util.ArrayList;
 
-import org.tweetyproject.logics.pl.reasoner.SimplePlReasoner;
 import org.tweetyproject.logics.pl.syntax.PlBeliefSet;
+import org.tweetyproject.logics.pl.reasoner.SatReasoner;
+import org.tweetyproject.logics.pl.sat.Sat4jSolver;
+import org.tweetyproject.logics.pl.sat.SatSolver;
 
 public class EntailmentChecker {
 
-    static Boolean checkEntailment(ArrayList<PlBeliefSet> rankedKB, PlFormula formula) {
-        SimplePlReasoner classicalReasoner = new SimplePlReasoner();
+    static Boolean checkEntailment(ArrayList<PlBeliefSet> originalRankedKB, PlFormula formula) {
+        SatSolver.setDefaultSolver(new Sat4jSolver());
+        SatReasoner classicalReasoner = new SatReasoner();
         PlFormula negationOfAntecedent = new Negation(((Implication) formula).getFormulas().getFirst());
+        ArrayList<PlBeliefSet> rankedKB = (ArrayList<PlBeliefSet>) originalRankedKB.clone();
         PlBeliefSet combinedRankedKB = combine(rankedKB);
         while (combinedRankedKB.size() != 0) {
             System.out.println("We are checking whether or not " + negationOfAntecedent.toString() + " is entailed by: "

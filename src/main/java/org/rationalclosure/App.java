@@ -54,8 +54,40 @@ public class App {
             System.out.println("Equivalence symbol: <=>");
             System.out.println("Negation symbol: !");
         }
-        RationalReasoner reasoner = new RationalReasoner(beliefSet, formulaWereCheckingFor, classicalSet,
-                entailmentCheckingAlgorithm);
+
+        RationalReasoner reasoner = new RationalReasoner(beliefSet, classicalSet, entailmentCheckingAlgorithm);
+        System.out.println(reasoner.query(formulaWereCheckingFor, entailmentCheckingAlgorithm));
+        System.out.println(
+                "Enter a defeasible implication formula to see if it is entailed by the current knowledge base.");
+        Scanner input = new Scanner(System.in);
+        while (input.hasNextLine()) {
+            try {
+                PlFormula formula = (PlFormula) parser.parseFormula(reformatDefeasibleImplication(input.nextLine()));
+                System.out.println("Enter which entailment checking algorithm you'd like to use (binary/regular):");
+                entailmentCheckingAlgorithm = input.nextLine();
+                while (!entailmentCheckingAlgorithm.equals("binary")
+                        && !entailmentCheckingAlgorithm.equals("regular")) {
+                    System.out
+                            .println("Invalid entailment checking algorithm. Please enter \'binary\' or \'regular\'.");
+                    entailmentCheckingAlgorithm = input.nextLine();
+                }
+                System.out.println(reasoner.query(formula, entailmentCheckingAlgorithm));
+                System.out.println(
+                        "Enter a defeasible implication formula to see if it is entailed by the current knowledge base.");
+            } catch (Exception e) {
+                System.out.println(
+                        "Couldn't parse formula. Ensure it is a defeasible implication in the correct format:");
+                System.out.println("Implication symbol: =>");
+                System.out.println("Defeasible Implication symbol: ~>");
+                System.out.println("Conjunction symbol: && ");
+                System.out.println("Disjunction symbol: ||");
+                System.out.println("Equivalence symbol: <=>");
+                System.out.println("Negation symbol: !");
+                System.out.println(
+                        "Enter a defeasible implication to see if it is entailed by the current knowledge base.");
+            }
+        }
+        input.close();
     }
 
     static String reformatDefeasibleImplication(String formula) {

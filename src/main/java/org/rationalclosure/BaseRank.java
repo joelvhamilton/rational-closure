@@ -5,7 +5,6 @@ import org.tweetyproject.logics.pl.syntax.*;
 import java.util.*;
 
 import org.tweetyproject.logics.pl.syntax.PlBeliefSet;
-import org.tweetyproject.logics.pl.reasoner.SimplePlReasoner;
 import org.tweetyproject.logics.pl.reasoner.SatReasoner;
 import org.tweetyproject.logics.pl.sat.Sat4jSolver;
 import org.tweetyproject.logics.pl.sat.SatSolver;
