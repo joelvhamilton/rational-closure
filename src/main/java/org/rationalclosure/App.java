@@ -38,10 +38,10 @@ public class App {
                 }
                 if (stringFormula.contains("~>")) {
                     stringFormula = reformatDefeasibleImplication(stringFormula);
+                    beliefSet.add((PlFormula) parser.parseFormula(stringFormula));
                 } else {
                     classicalSet.add((PlFormula) parser.parseFormula(stringFormula));
                 }
-                beliefSet.add((PlFormula) parser.parseFormula(stringFormula));
             }
             reader.close();
         } catch (FileNotFoundException e) {

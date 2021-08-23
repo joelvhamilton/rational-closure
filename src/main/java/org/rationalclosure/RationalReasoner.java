@@ -16,7 +16,7 @@ public class RationalReasoner {
     RationalReasoner(PlBeliefSet kb, PlBeliefSet classicalStatements, String entailmentCheckingAlgorithm) {
         this.knowledgeBase = kb;
         this.parser = new PlParser();
-        rankedKnowledgeBase = BaseRank.rank(kb, classicalStatements);
+        rankedKnowledgeBase = BaseRankThreaded.rank(kb, classicalStatements);
     }
 
     Boolean query(PlFormula formula, String entailmentCheckingAlgorithm) {

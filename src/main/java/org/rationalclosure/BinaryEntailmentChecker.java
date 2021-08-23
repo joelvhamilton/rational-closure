@@ -14,7 +14,8 @@ public class BinaryEntailmentChecker {
 
     static int rankFromWhichToRemove = -1;
 
-    static Boolean checkEntailmentBinarySearch(PlBeliefSet[] originalRankedKB, PlFormula formula, int left, int right, PlFormula negationOfAntecedent) {
+    static Boolean checkEntailmentBinarySearch(PlBeliefSet[] originalRankedKB, PlFormula formula, int left, int right,
+            PlFormula negationOfAntecedent) {
         SatSolver.setDefaultSolver(new Sat4jSolver());
         SatReasoner classicalReasoner = new SatReasoner();
         PlBeliefSet[] rankedKB = originalRankedKB.clone();
@@ -37,7 +38,8 @@ public class BinaryEntailmentChecker {
                 if (classicalReasoner.query(combine(Arrays.copyOfRange(rankedKB, mid, rankedKB.length)),
                         negationOfAntecedent)) {
                     rankFromWhichToRemove = mid;
-                    System.out.println("We\'ve found the rank from which we need to remove the above ranks! It's rank " + Integer.toString(mid));
+                    System.out.println("We\'ve found the rank from which we need to remove the above ranks! It's rank "
+                            + Integer.toString(mid));
                 } else { // removing it still means the negation of the antecedent is not entailed. we
                     // know its in the bottom half.
                     System.out.println("The rank we\'re looking for is in the top half of the remaining ranks.");
