@@ -9,7 +9,7 @@ import org.tweetyproject.logics.pl.reasoner.SatReasoner;
 import org.tweetyproject.logics.pl.sat.Sat4jSolver;
 import org.tweetyproject.logics.pl.sat.SatSolver;
 
-public class EntailmentChecker {
+public class RegularEntailmentChecker {
 
     static Boolean checkEntailment(ArrayList<PlBeliefSet> originalRankedKB, PlFormula formula) {
         SatSolver.setDefaultSolver(new Sat4jSolver());

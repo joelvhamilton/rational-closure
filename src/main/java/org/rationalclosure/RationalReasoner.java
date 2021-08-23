@@ -12,6 +12,8 @@ public class RationalReasoner {
     PlBeliefSet knowledgeBase = new PlBeliefSet();
     PlParser parser = new PlParser();
     ArrayList<PlBeliefSet> rankedKnowledgeBase = new ArrayList<PlBeliefSet>();
+    IndexingEntailmentChecker indReg = new IndexingEntailmentChecker();
+    IndexingBinaryEntailmentChecker indBin = new IndexingBinaryEntailmentChecker();
 
     RationalReasoner(PlBeliefSet kb, PlBeliefSet classicalStatements, String entailmentCheckingAlgorithm) {
         this.knowledgeBase = kb;
@@ -24,10 +26,10 @@ public class RationalReasoner {
             PlBeliefSet[] rankedKnowledgeBaseArray = new PlBeliefSet[rankedKnowledgeBase.size()];
             PlBeliefSet[] rankedKBArray = rankedKnowledgeBase.toArray(rankedKnowledgeBaseArray);
             PlFormula negationOfAntecedent = new Negation(((Implication) formula).getFormulas().getFirst());
-            return BinaryEntailmentChecker.checkEntailmentBinarySearch(rankedKBArray, formula, 0,
-                    rankedKnowledgeBase.size(), negationOfAntecedent);
+            return indBin.checkEntailmentBinarySearch(rankedKBArray, formula, 0, rankedKnowledgeBase.size(),
+                    negationOfAntecedent);
         } else if (entailmentCheckingAlgorithm.equals("regular")) {
-            return EntailmentChecker.checkEntailment(rankedKnowledgeBase, formula);
+            return indReg.checkEntailment(rankedKnowledgeBase, formula);
         } else {
             System.out.println("Invalid entailment checking algorithm.");
         }
