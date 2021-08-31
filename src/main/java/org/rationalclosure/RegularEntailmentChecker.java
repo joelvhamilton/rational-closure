@@ -11,7 +11,7 @@ import org.tweetyproject.logics.pl.sat.SatSolver;
 
 public class RegularEntailmentChecker {
 
-    static Boolean checkEntailment(ArrayList<PlBeliefSet> originalRankedKB, PlFormula formula) {
+    Boolean checkEntailment(ArrayList<PlBeliefSet> originalRankedKB, PlFormula formula) {
         SatSolver.setDefaultSolver(new Sat4jSolver());
         SatReasoner classicalReasoner = new SatReasoner();
         PlFormula negationOfAntecedent = new Negation(((Implication) formula).getFormulas().getFirst());

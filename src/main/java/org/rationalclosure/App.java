@@ -20,9 +20,15 @@ public class App {
         PlParser parser = new PlParser();
         PlBeliefSet classicalSet = new PlBeliefSet();
         PlFormula formulaWereCheckingFor = (PlFormula) parser.parseFormula("a");
+        Boolean indexing;
 
         String fileName = args[0];
         String entailmentCheckingAlgorithm = args[1];
+        if (args[2] == "indexing") {
+            indexing = true;
+        } else {
+            indexing = false;
+        }
         try {
             File file = new File(fileName);
             Scanner reader = new Scanner(file);
@@ -55,7 +61,8 @@ public class App {
             System.out.println("Negation symbol: !");
         }
 
-        RationalReasoner reasoner = new RationalReasoner(beliefSet, classicalSet, entailmentCheckingAlgorithm);
+        RationalReasoner reasoner = new RationalReasoner(beliefSet, classicalSet, entailmentCheckingAlgorithm,
+                indexing);
         System.out.println(reasoner.query(formulaWereCheckingFor, entailmentCheckingAlgorithm));
         System.out.println(
                 "Enter a defeasible implication formula to see if it is entailed by the current knowledge base.");
@@ -75,6 +82,7 @@ public class App {
                 System.out.println(
                         "Enter a defeasible implication formula to see if it is entailed by the current knowledge base.");
             } catch (Exception e) {
+                e.printStackTrace();
                 System.out.println(
                         "Couldn't parse formula. Ensure it is a defeasible implication in the correct format:");
                 System.out.println("Implication symbol: =>");

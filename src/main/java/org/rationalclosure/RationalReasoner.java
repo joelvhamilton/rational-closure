@@ -12,13 +12,31 @@ public class RationalReasoner {
     PlBeliefSet knowledgeBase = new PlBeliefSet();
     PlParser parser = new PlParser();
     ArrayList<PlBeliefSet> rankedKnowledgeBase = new ArrayList<PlBeliefSet>();
-    IndexingEntailmentChecker indReg = new IndexingEntailmentChecker();
-    IndexingBinaryEntailmentChecker indBin = new IndexingBinaryEntailmentChecker();
+    Boolean indexing = false;
+    IndexingBinaryEntailmentChecker indBin;
+    BinaryEntailmentChecker bin;
+    RegularEntailmentChecker reg;
+    IndexingEntailmentChecker indReg;
 
-    RationalReasoner(PlBeliefSet kb, PlBeliefSet classicalStatements, String entailmentCheckingAlgorithm) {
+    RationalReasoner(PlBeliefSet kb, PlBeliefSet classicalStatements, String entailmentCheckingAlgorithm,
+            Boolean indexing) {
         this.knowledgeBase = kb;
         this.parser = new PlParser();
         rankedKnowledgeBase = BaseRankThreaded.rank(kb, classicalStatements);
+        this.indexing = indexing;
+        if (entailmentCheckingAlgorithm.equals("binary")) {
+            if (indexing) {
+                indBin = new IndexingBinaryEntailmentChecker();
+            } else {
+                bin = new BinaryEntailmentChecker();
+            }
+        } else if (entailmentCheckingAlgorithm.equals("regular")) {
+            if (indexing) {
+                indReg = new IndexingEntailmentChecker();
+            } else {
+                reg = new RegularEntailmentChecker();
+            }
+        }
     }
 
     Boolean query(PlFormula formula, String entailmentCheckingAlgorithm) {
@@ -26,10 +44,19 @@ public class RationalReasoner {
             PlBeliefSet[] rankedKnowledgeBaseArray = new PlBeliefSet[rankedKnowledgeBase.size()];
             PlBeliefSet[] rankedKBArray = rankedKnowledgeBase.toArray(rankedKnowledgeBaseArray);
             PlFormula negationOfAntecedent = new Negation(((Implication) formula).getFormulas().getFirst());
-            return indBin.checkEntailmentBinarySearch(rankedKBArray, formula, 0, rankedKnowledgeBase.size(),
-                    negationOfAntecedent);
+            if (indexing) {
+                return indBin.checkEntailmentBinarySearch(rankedKBArray, formula, 0, rankedKnowledgeBase.size(),
+                        negationOfAntecedent);
+            } else {
+                return bin.checkEntailmentBinarySearch(rankedKBArray, formula, 0, rankedKnowledgeBase.size(),
+                        negationOfAntecedent);
+            }
         } else if (entailmentCheckingAlgorithm.equals("regular")) {
-            return indReg.checkEntailment(rankedKnowledgeBase, formula);
+            if (indexing) {
+                return indReg.checkEntailment(rankedKnowledgeBase, formula);
+            } else {
+                return reg.checkEntailment(rankedKnowledgeBase, formula);
+            }
         } else {
             System.out.println("Invalid entailment checking algorithm.");
         }

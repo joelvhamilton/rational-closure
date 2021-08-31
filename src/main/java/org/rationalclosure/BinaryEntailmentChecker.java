@@ -14,7 +14,7 @@ public class BinaryEntailmentChecker {
 
     static int rankFromWhichToRemove = -1;
 
-    static Boolean checkEntailmentBinarySearch(PlBeliefSet[] originalRankedKB, PlFormula formula, int left, int right,
+    Boolean checkEntailmentBinarySearch(PlBeliefSet[] originalRankedKB, PlFormula formula, int left, int right,
             PlFormula negationOfAntecedent) {
         SatSolver.setDefaultSolver(new Sat4jSolver());
         SatReasoner classicalReasoner = new SatReasoner();
