@@ -1,0 +1,8 @@
+fd ~> !f
+fd ~> f
+b ~> l
+b~> !l
+l~>s
+l~>!s
+p~>w
+p~>f

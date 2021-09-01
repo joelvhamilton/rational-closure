@@ -64,7 +64,7 @@ public class BaseRankThreaded extends RecursiveTask<PlBeliefSet> {
 
     public static ArrayList<PlBeliefSet> rank(PlBeliefSet dkb, PlBeliefSet ckb) {
         ArrayList<PlBeliefSet> rankedKB = new ArrayList<PlBeliefSet>();
-        PlBeliefSet currentMaterialisation = dkb;
+        PlBeliefSet currentMaterialisation = new PlBeliefSet(dkb);
         PlBeliefSet prevMaterialisation = new PlBeliefSet();
 
         while (true) {
@@ -100,8 +100,8 @@ public class BaseRankThreaded extends RecursiveTask<PlBeliefSet> {
                 break;
             }
             if (prevMaterialisation.size() == 0) {
-                prevMaterialisation.addAll(ckb);
-                rankedKB.add(prevMaterialisation);
+                currentMaterialisation.addAll(ckb);
+                rankedKB.add(currentMaterialisation);
                 System.out.println("Added infinite rank");
                 break;
             }

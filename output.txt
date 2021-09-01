@@ -1,0 +1,8 @@
+Duration of regular query: 6447
+Duration of regular query with indexing: 4643
+Duration of binary query: 142
+Duration of binary query with indexing: 194
+Duration of regular query: 6282
+Duration of regular query with indexing: 53
+Duration of binary query: 539
+Duration of binary query with indexing: 26

@@ -19,7 +19,6 @@ public class App {
         PlBeliefSet beliefSet = new PlBeliefSet();
         PlParser parser = new PlParser();
         PlBeliefSet classicalSet = new PlBeliefSet();
-        PlFormula formulaWereCheckingFor = (PlFormula) parser.parseFormula("a");
         Boolean indexing;
 
         String fileName = args[0];
@@ -32,11 +31,6 @@ public class App {
         try {
             File file = new File(fileName);
             Scanner reader = new Scanner(file);
-            String formulaToCheckFor = reader.nextLine();
-            if (formulaToCheckFor.contains("¬")) {
-                formulaToCheckFor = formulaToCheckFor.replaceAll("¬", "!");
-            }
-            formulaWereCheckingFor = (PlFormula) parser.parseFormula(reformatDefeasibleImplication(formulaToCheckFor));
             while (reader.hasNextLine()) {
                 String stringFormula = reader.nextLine();
                 if (stringFormula.contains("¬")) {
@@ -63,7 +57,6 @@ public class App {
 
         RationalReasoner reasoner = new RationalReasoner(beliefSet, classicalSet, entailmentCheckingAlgorithm,
                 indexing);
-        System.out.println(reasoner.query(formulaWereCheckingFor, entailmentCheckingAlgorithm));
         System.out.println(
                 "Enter a defeasible implication formula to see if it is entailed by the current knowledge base.");
         Scanner input = new Scanner(System.in);

@@ -13,13 +13,14 @@ import org.tweetyproject.logics.pl.sat.SatSolver;
 public class BinaryEntailmentChecker {
 
     static int rankFromWhichToRemove = -1;
+    static int prevmid;
 
     Boolean checkEntailmentBinarySearch(PlBeliefSet[] originalRankedKB, PlFormula formula, int left, int right,
             PlFormula negationOfAntecedent) {
         SatSolver.setDefaultSolver(new Sat4jSolver());
         SatReasoner classicalReasoner = new SatReasoner();
         PlBeliefSet[] rankedKB = originalRankedKB.clone();
-        if (right >= left) {
+        if (right > left) {
             int mid = left + ((right - left) / 2);
             // if removing middle one and the ones above it, the negation of the antecedent
             // is still entailed, then its in the top half.
@@ -43,6 +44,8 @@ public class BinaryEntailmentChecker {
                 } else { // removing it still means the negation of the antecedent is not entailed. we
                     // know its in the bottom half.
                     System.out.println("The rank we\'re looking for is in the top half of the remaining ranks.");
+                    System.out.println("calling checkEntailmentSearch with left=" + Integer.toString(left)
+                            + " and right=" + Integer.toString(right));
                     return checkEntailmentBinarySearch(rankedKB, formula, left, mid, negationOfAntecedent);
                 }
             }

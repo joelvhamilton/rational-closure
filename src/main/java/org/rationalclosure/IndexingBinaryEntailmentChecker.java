@@ -25,7 +25,7 @@ public class IndexingBinaryEntailmentChecker {
         if (antecedentNegationRanksToRemoveFrom.get(negationOfAntecedent) != null) {
             rankFromWhichToRemove = antecedentNegationRanksToRemoveFrom.get(negationOfAntecedent);
         } else {
-            if (right >= left) {
+            if (right > left) {
                 int mid = left + ((right - left) / 2);
                 // if removing middle one and the ones above it, the negation of the antecedent
                 // is still entailed, then its in the top half.
