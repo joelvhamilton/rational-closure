@@ -7,8 +7,8 @@ performTests = function(data_frame) {
   print("Regular vs Binary")
   print(wilcox.test(data_frame$regular, data_frame$binary, paired=TRUE))
   
-  print("Binary vs Binary with Indexing")
-  print(wilcox.test(data_frame$binary, data_frame$binary_with_indexing, paired=TRUE))
+  print("Regular vs Binary with Indexing")
+  print(wilcox.test(data_frame$regular, data_frame$binary_with_indexing, paired=TRUE))
 }
 
 # tests for different numbers of ranks (keep number of statements in each rank (1) and distribution of ranks constant (uniform))
@@ -49,11 +49,8 @@ performTests(ten_rank_1st_rank)
 performTests(ten_rank_10th_rank)
 
 # tests for different numbers of statements in ranks (keep number of ranks (100) + distribution (uniform) constant here?)
-uni_50ranks_diff_ante = read.csv("outputdist_50queries_DIFFANTE.csv")
-uni_50ranks_same_ante = read.csv("outputdist_50queries_SAME_ANTE.csv")
-uni_50ranks_half_repeated_ante = read.csv("outputdist_50queries_half_repeated_ante.csv")
-uni_50ranks_1st_rank = read.csv("outputdist_50queries_1strank.csv")
-uni_50ranks_50th_rank = read.csv("outputdist_50queries_50thrank.csv")
+
+# uniform results over 50 ranks are taken from the "fifty rank" data of the ranks comparison
 
 norm_50ranks_diff_ante = read.csv("outputdist_50queries_DIFFANTE1.csv")
 norm_50ranks_same_ante = read.csv("outputdist_50queries_SAME_ANTE1.csv")
@@ -66,12 +63,6 @@ expo_50ranks_same_ante = read.csv("outputdist_50queries_SAME_ANTE2.csv")
 expo_50ranks_half_repeated_ante = read.csv("outputdist_50queries_half_repeated_ante2.csv")
 expo_50ranks_1st_rank = read.csv("outputdist_50queries_1strank2.csv")
 expo_50ranks_50th_rank = read.csv("outputdist_50queries_50thrank2.csv")
-
-performTests(uni_50ranks_diff_ante)
-performTests(uni_50ranks_same_ante)
-performTests(uni_50ranks_half_repeated_ante)
-performTests(uni_50ranks_1st_rank)
-performTests(uni_50ranks_50th_rank)
 
 performTests(norm_50ranks_diff_ante)
 performTests(norm_50ranks_same_ante)
