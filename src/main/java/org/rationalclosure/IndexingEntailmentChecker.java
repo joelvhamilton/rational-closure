@@ -21,6 +21,9 @@ public class IndexingEntailmentChecker {
         ArrayList<PlBeliefSet> rankedKB = (ArrayList<PlBeliefSet>) originalRankedKB.clone();
         PlBeliefSet combinedRankedKB = combine(rankedKB);
         if (antecedentNegationRanksToRemoveFrom.get(negationOfAntecedent) != null) {
+            System.out.println("We know to remove rank "
+                    + Integer.toString(antecedentNegationRanksToRemoveFrom.get(negationOfAntecedent))
+                    + " and all ranks above it.");
             for (int i = 0; i < (antecedentNegationRanksToRemoveFrom.get(negationOfAntecedent)); i++) {
                 rankedKB.remove(rankedKB.get(0));
             }

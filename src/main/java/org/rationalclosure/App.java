@@ -4,6 +4,7 @@ import org.tweetyproject.logics.pl.syntax.*;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import org.tweetyproject.logics.pl.parser.PlParser;
 import org.tweetyproject.commons.ParserException;
@@ -19,12 +20,14 @@ public class App {
         PlBeliefSet beliefSet = new PlBeliefSet();
         PlParser parser = new PlParser();
         PlBeliefSet classicalSet = new PlBeliefSet();
-        Boolean indexing;
+        Boolean indexing = false;
 
         String fileName = args[0];
-        String entailmentCheckingAlgorithm = args[1];
-        if (args[2] == "indexing") {
-            indexing = true;
+        if (args.length > 1) {
+            System.out.println(args[1]);
+            if (args[1].equals("indexing")) {
+                indexing = true;
+            }
         } else {
             indexing = false;
         }
@@ -55,13 +58,15 @@ public class App {
             System.out.println("Negation symbol: !");
         }
 
-        RationalReasoner reasoner = new RationalReasoner(beliefSet, classicalSet, entailmentCheckingAlgorithm,
-                indexing);
+        ArrayList<PlBeliefSet> rankedKnowledgeBase = BaseRankThreaded.rank(beliefSet, classicalSet);
+
+        RationalReasoner reasoner = new RationalReasoner(rankedKnowledgeBase, indexing);
         System.out.println(
                 "Enter a defeasible implication formula to see if it is entailed by the current knowledge base.");
         Scanner input = new Scanner(System.in);
         while (input.hasNextLine()) {
             try {
+                String entailmentCheckingAlgorithm = " ";
                 PlFormula formula = (PlFormula) parser.parseFormula(reformatDefeasibleImplication(input.nextLine()));
                 System.out.println("Enter which entailment checking algorithm you'd like to use (binary/regular):");
                 entailmentCheckingAlgorithm = input.nextLine();
@@ -71,6 +76,7 @@ public class App {
                             .println("Invalid entailment checking algorithm. Please enter \'binary\' or \'regular\'.");
                     entailmentCheckingAlgorithm = input.nextLine();
                 }
+
                 System.out.println(reasoner.query(formula, entailmentCheckingAlgorithm));
                 System.out.println(
                         "Enter a defeasible implication formula to see if it is entailed by the current knowledge base.");

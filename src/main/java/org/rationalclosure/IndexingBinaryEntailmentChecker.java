@@ -24,6 +24,8 @@ public class IndexingBinaryEntailmentChecker {
 
         if (antecedentNegationRanksToRemoveFrom.get(negationOfAntecedent) != null) {
             rankFromWhichToRemove = antecedentNegationRanksToRemoveFrom.get(negationOfAntecedent);
+            System.out.println(
+                    "We know to remove rank " + Integer.toString(rankFromWhichToRemove) + " and all ranks above it.");
         } else {
             if (right > left) {
                 int mid = left + ((right - left) / 2);

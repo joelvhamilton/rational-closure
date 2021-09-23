@@ -44,8 +44,6 @@ public class BinaryEntailmentChecker {
                 } else { // removing it still means the negation of the antecedent is not entailed. we
                     // know its in the bottom half.
                     System.out.println("The rank we\'re looking for is in the top half of the remaining ranks.");
-                    System.out.println("calling checkEntailmentSearch with left=" + Integer.toString(left)
-                            + " and right=" + Integer.toString(right));
                     return checkEntailmentBinarySearch(rankedKB, formula, left, mid, negationOfAntecedent);
                 }
             }
@@ -54,6 +52,8 @@ public class BinaryEntailmentChecker {
         }
 
         if (rankFromWhichToRemove + 1 < rankedKB.length) {
+            System.out.println("We now check whether or not the formula" + formula.toString()
+                    + " is entailed by the statements in the remaining ranks.");
             if (classicalReasoner.query(
                     combine(Arrays.copyOfRange(rankedKB, rankFromWhichToRemove + 1, rankedKB.length)), formula)) {
                 return true;
